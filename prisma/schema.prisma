@@ -13,3 +13,51 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+enum Roles {
+  ADMIN // Can create, update, and manage records and users
+  ANALYST // Can view records and access insights
+  VIEWER // Can only view dashboard data
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+enum CategoryTypes {
+  SALARY
+  FOOD
+  RENT
+  LOAN
+  OTHER // buying for themselves
+}
+
+model User{
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  email String  @unique
+  username  String
+  password String
+  role Roles
+  isActive Boolean @default(true)
+
+  transactions Transaction[]
+
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Transaction {
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  amount Float
+  type TransactionType
+  category CategoryTypes
+  date DateTime
+  notes String?
+
+  user User @relation(fields: [userId], references: [id])
+  userId String @db.ObjectId
+
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+}
