@@ -7,11 +7,10 @@ import { getEnvVar } from "../../utils/env.js";
 
 export const signUp = async(req: Request, res: Response, next: NextFunction) => {
     try {
-        const {username,email, password, role} = req.body
+        const {username,email, password} = req.body
         if (!username || !email || !password) {
             return res.status(400).json({ message: "Missing required fields" });
         }
-        if( !["ADMIN","ANALYST","VIEWER"].includes(role)) return res.status(400).json({message:"role should be in (ADMIN, ANALYST, VIEWER)"})
 
         const check = await prisma.user.findFirst({
             where:{
@@ -26,7 +25,6 @@ export const signUp = async(req: Request, res: Response, next: NextFunction) => 
                 username,
                 email,
                 password: hashedPass,
-                role
             }
         })
 

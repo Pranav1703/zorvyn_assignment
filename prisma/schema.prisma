@@ -38,7 +38,7 @@ model User{
   email String  @unique
   username  String
   password String
-  role Roles
+  role Roles @default(VIEWER)
   isActive Boolean @default(true)
 
   transactions Transaction[]
