@@ -1,5 +1,0 @@
-import "dotenv/config";
-import { PrismaClient } from "../generated/prisma/client.js";
-const prisma = new PrismaClient();
-export { prisma };
-//# sourceMappingURL=prismaClient.js.map
