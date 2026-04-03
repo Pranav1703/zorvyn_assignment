@@ -6,7 +6,6 @@ export const getFinanceOverviewSummary = async (req: Request, res: Response, nex
     try {
         const baseWhere: TransactionWhereInput = {
             deletedAt: null,
-            userId: req.user?.userId!
         };
 
         const [incomeAgg, expenseAgg] = await Promise.all([
@@ -42,7 +41,6 @@ export const getCategoryTotals = async (req: Request, res: Response, next: NextF
             _sum: { amount: true },
             where:{
                 deletedAt: null,
-                userId: req.user?.userId!
             }
         });
 
@@ -65,7 +63,6 @@ export const getRecentActivitySummary = async (req: Request, res: Response, next
         const recentActivity = await prisma.transaction.findMany({
             where:{
                 deletedAt: null,
-                userId: req.user?.userId!
             },
             orderBy: { date: 'desc' },
             take: takeLimit
@@ -87,7 +84,6 @@ export const getMonthlyTrendsSummary = async (req: Request, res: Response, next:
         const recentTrendData = await prisma.transaction.findMany({
             where: {
                 deletedAt: null,
-                userId: req.user?.userId!,
                 date: { gte: dateLimit }
             },
             select: { amount: true, type: true, date: true } 

@@ -13,7 +13,7 @@ export const getAllTransactions = async(req: Request, res: Response, next: NextF
         const { type, category, startDate, endDate } = req.query;
 
         const where: any = {
-            deletedAt: null
+            deletedAt: null,
         };
 
         if (type) where.type = type as TransactionType;
@@ -79,7 +79,6 @@ export const createTransaction = async(req: Request, res: Response, next: NextFu
                 category,
                 date: parsedDate,
                 notes: notes ? notes : undefined,
-                userId: req.user?.userId!
             }
         })
         res.status(201).json({message: "new transaction created", data: newTransaction})

@@ -9,6 +9,7 @@ import { isValidEmail } from "../../utils/validation.js";
 
 export const signUp = async(req: Request, res: Response, next: NextFunction) => {
     try {
+
         const {username,email, password} = req.body
         if (!username || !email || !password) {
             throw new AppError("Missing required fields: username, email, password", 400);
@@ -23,7 +24,7 @@ export const signUp = async(req: Request, res: Response, next: NextFunction) => 
                 email
             }
         })
-        if(check) return res.status(403).json({message: `user with ${email} already exists.`})
+        if(check) throw new AppError(`User with ${email} already exists.`, 409);
         
         const hashedPass = await bcrypt.hash(password, 10)
         const newUser = await prisma.user.create({
@@ -47,7 +48,7 @@ export const signUp = async(req: Request, res: Response, next: NextFunction) => 
             httpOnly: true,
         })
 
-        res.sendStatus(201)
+        res.status(201).json({message: "User created"})
     } catch (error) {
         next(error)
     }
@@ -56,17 +57,17 @@ export const signUp = async(req: Request, res: Response, next: NextFunction) => 
 export const login = async(req: Request, res: Response, next: NextFunction) => {
     try {
         const {email, password} = req.body
-        if(!email || !password) return res.status(401).json({message: "Missing email or password in request body"})
+        if(!email || !password) throw new AppError("Missing email or password in request body", 400);
         
         const check = await prisma.user.findUnique({
             where:{
                 email
             }
         })
-        if(!check) return res.status(400).json({message: `user with ${email} doesnt exist.`})
+        if(!check) throw new AppError(`User with ${email} doesn't exist.`, 401)
 
         const compare = await bcrypt.compare(password, check.password)
-        if(!compare) return res.status(400).json({message: "Incorrect password."})
+        if(!compare) throw new AppError("Incorrect password.", 401);
         
         const secretKey = getEnvVar("JWT_SECRET")
         const token = jwt.sign({

@@ -9,7 +9,7 @@ import { getAllTransactions,
 
 const r = Router()
 
-r.get("/",authenticate, authorizeRoles("ANALYST", "ADMIN","VIEWER"), getAllTransactions);
+r.get("/",authenticate, authorizeRoles("ANALYST", "ADMIN", "VIEWER"), getAllTransactions);
 r.post("/new", authenticate, authorizeRoles("ADMIN"), createTransaction)
 r.put("/:id", authenticate, authorizeRoles("ADMIN"), updateTransaction);
 r.delete("/:id", authenticate, authorizeRoles("ADMIN"), deleteTransaction);
