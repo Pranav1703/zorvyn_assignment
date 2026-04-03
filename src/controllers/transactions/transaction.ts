@@ -11,9 +11,9 @@ export const getAllTransactions = async(req: Request, res: Response, next: NextF
         const skip = (page-1) * limit;
 
         const { type, category, startDate, endDate } = req.query;
-
+        if (type && !["INCOME","EXPENSE"].includes(type as string)) throw new AppError("'type' should be either 'INCOME' or 'EXPENSE'", 400);
         const where: any = {
-            deletedAt: null,
+            isDeleted: false,
         };
 
         if (type) where.type = type as TransactionType;
@@ -143,9 +143,7 @@ export const deleteTransaction = async (req: Request, res: Response, next: NextF
 
         await prisma.transaction.update({
             where: { id },
-            data:{
-                deletedAt: new Date()
-            }
+            data: { isDeleted: true }
         });
 
         res.status(200).json({ message: "Transaction deleted successfully" });

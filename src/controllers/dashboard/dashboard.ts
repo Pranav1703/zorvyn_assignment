@@ -5,7 +5,7 @@ import type { TransactionWhereInput } from "../../generated/prisma/models.js";
 export const getFinanceOverviewSummary = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const baseWhere: TransactionWhereInput = {
-            deletedAt: null,
+            isDeleted: false,
         };
 
         const [incomeAgg, expenseAgg] = await Promise.all([
@@ -40,7 +40,7 @@ export const getCategoryTotals = async (req: Request, res: Response, next: NextF
             by: ['category', 'type'],
             _sum: { amount: true },
             where:{
-                deletedAt: null,
+                isDeleted: false,
             }
         });
 
@@ -62,7 +62,7 @@ export const getRecentActivitySummary = async (req: Request, res: Response, next
 
         const recentActivity = await prisma.transaction.findMany({
             where:{
-                deletedAt: null,
+                isDeleted: false,
             },
             orderBy: { date: 'desc' },
             take: takeLimit
@@ -83,7 +83,7 @@ export const getMonthlyTrendsSummary = async (req: Request, res: Response, next:
 
         const recentTrendData = await prisma.transaction.findMany({
             where: {
-                deletedAt: null,
+                isDeleted: false,
                 date: { gte: dateLimit }
             },
             select: { amount: true, type: true, date: true } 
