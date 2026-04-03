@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import { prisma } from "../../database/prismaClient.js";
 import type { TransactionType } from "../../generated/prisma/client.js";
+import { AppError } from "../../middleware/errorHandler.js";
 
 export const getAllTransactions = async(req: Request, res: Response, next: NextFunction) => {
     try {
@@ -58,15 +59,26 @@ export const createTransaction = async(req: Request, res: Response, next: NextFu
             notes,
         } = req.body
 
-        if(!amount || !type || !category || !date) return res.status(400).json({message: "missing required fields"})
-        if (!["INCOME","EXPENSE"].includes(type)) return res.status(400).json({message: "type should be either 'INCOME' or 'EXPENSE'"})
+        if(!amount || !type || !category || !date) throw new AppError("Missing required fields", 400);
+        if (!["INCOME","EXPENSE"].includes(type)) throw new AppError("Type should be either 'INCOME' or 'EXPENSE'", 400);
+
+        const numericAmount = Number(amount);
+        if (isNaN(numericAmount) || numericAmount <= 0) {
+            throw new AppError("Amount must be a valid positive number", 400);
+        }
+
+        const parsedDate = new Date(date);
+        if (isNaN(parsedDate.getTime())) {
+            throw new AppError("Invalid date format", 400);
+        }
+
         const newTransaction = await prisma.transaction.create({
             data:{
-                amount: Number(amount),
+                amount: numericAmount,
                 type,
                 category,
-                date: new Date(date),
-                notes: notes? notes: undefined,
+                date: parsedDate,
+                notes: notes ? notes : undefined,
                 userId: req.user?.userId!
             }
         })
@@ -83,12 +95,38 @@ export const updateTransaction = async (req: Request, res: Response, next: NextF
         const updates = req.body;
 
         const updateData: any = {}
-        if(updates.amount) updateData.amount = Number(updates.amount)
-        if(updates.type) updateData.type = updates.type
-        if(updates.category) updateData.category = updates.category
-        if(updates.date) updateData.date= new Date(updates.date)
-        if(updates.notes) updateData.notes = updates.notes
+        if (updates.amount !== undefined) {
+            const numericAmount = Number(updates.amount);
 
+            if (isNaN(numericAmount) || numericAmount <= 0) {
+                throw new AppError("Amount must be a valid positive number", 400);
+            }
+            updateData.amount = numericAmount;
+        }
+
+        if (updates.type !== undefined) {
+            if (!["INCOME", "EXPENSE"].includes(updates.type)) {
+                throw new AppError("Type should be either 'INCOME' or 'EXPENSE'", 400);
+            }
+            updateData.type = updates.type;
+        }
+
+        if (updates.category !== undefined) {
+            updateData.category = updates.category;
+        }
+
+        if (updates.date !== undefined) {
+
+            const parsedDate = new Date(updates.date);
+            if (isNaN(parsedDate.getTime())) {
+                throw new AppError("Invalid date format", 400);
+            }
+            updateData.date = parsedDate;
+        }
+
+        if (updates.notes !== undefined) {
+            updateData.notes = updates.notes;
+        }
         const updatedTransaction = await prisma.transaction.update({
             where: { id },
             data: updateData

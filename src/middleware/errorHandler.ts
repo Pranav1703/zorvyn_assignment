@@ -19,6 +19,35 @@ export const globalErrorHandler = (
     console.log("[global err handler] ",err.message, " : ", err.stack)
     err.statusCode = err.statusCode || 500;
 
+    if (err.name === 'CastError' || err.code === 'P2023') {
+      return res.status(400).json({
+        message: "Invalid ID format"
+      });
+    }
+    // Handle Prisma unique constraint violation
+    if (err.code === 'P2002') {
+      return res.status(409).json({
+        message: "Resource already exists"
+      });
+    }
+    // Handle Prisma record not found
+    if (err.code === 'P2025') {
+      return res.status(404).json({
+        message: "Resource not found"
+      });
+    }
+    // Handle JWT errors
+    if (err.name === 'JsonWebTokenError') {
+      return res.status(401).json({
+        message: "Invalid token"
+      });
+    }
+    if (err.name === 'TokenExpiredError') {
+      return res.status(401).json({
+        message: "Token expired"
+      });
+    }
+
     let message = 'Internal Server Error'
     if (err instanceof AppError) {
         message = err.message;

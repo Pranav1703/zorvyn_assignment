@@ -3,13 +3,19 @@ import { prisma } from "../../database/prismaClient.js";
 import bcrypt from "bcryptjs";
 import jwt from 'jsonwebtoken'
 import { getEnvVar } from "../../utils/env.js";
+import { AppError } from "../../middleware/errorHandler.js";
+import { isValidEmail } from "../../utils/validation.js";
 
 
 export const signUp = async(req: Request, res: Response, next: NextFunction) => {
     try {
         const {username,email, password} = req.body
         if (!username || !email || !password) {
-            return res.status(400).json({ message: "Missing required fields" });
+            throw new AppError("Missing required fields: username, email, password", 400);
+        }
+        
+        if (!isValidEmail(email)) {
+            throw new AppError("Invalid email format", 400);
         }
 
         const check = await prisma.user.findFirst({

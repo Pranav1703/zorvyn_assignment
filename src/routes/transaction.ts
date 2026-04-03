@@ -5,13 +5,13 @@ import { getAllTransactions,
     createTransaction,
     updateTransaction,
     deleteTransaction
-} from "../contollers/transactions/transaction.js";
+} from "../controllers/transactions/transaction.js";
 
 const r = Router()
 
 r.get("/",authenticate, authorizeRoles("ANALYST", "ADMIN","VIEWER"), getAllTransactions);
 r.post("/new", authenticate, authorizeRoles("ADMIN"), createTransaction)
-r.put("/:id", authorizeRoles("ADMIN"), updateTransaction);
-r.delete("/:id", authorizeRoles("ADMIN"), deleteTransaction);
+r.put("/:id", authenticate, authorizeRoles("ADMIN"), updateTransaction);
+r.delete("/:id", authenticate, authorizeRoles("ADMIN"), deleteTransaction);
 
 export default r
