@@ -50,7 +50,7 @@ export const signUp = async(req: Request, res: Response, next: NextFunction) => 
         }, secretKey)
         
         res.cookie("access-token", token,{
-            maxAge: 15 * 60 * 60,
+            maxAge: 60 * 60 * 1000,
             httpOnly: true,
         })
 
