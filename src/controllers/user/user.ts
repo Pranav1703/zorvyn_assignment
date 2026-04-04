@@ -32,6 +32,12 @@ export const signUp = async(req: Request, res: Response, next: NextFunction) => 
                 username,
                 email,
                 password: hashedPass,
+            },
+            select: {
+                id: true,
+                username: true,
+                email: true,
+                role: true
             }
         })
 
@@ -48,7 +54,7 @@ export const signUp = async(req: Request, res: Response, next: NextFunction) => 
             httpOnly: true,
         })
 
-        res.status(201).json({message: "User created"})
+        res.status(201).json({message: "User created and logged in.", userId: newUser.id})
     } catch (error) {
         next(error)
     }
@@ -62,7 +68,7 @@ export const login = async(req: Request, res: Response, next: NextFunction) => {
         const check = await prisma.user.findUnique({
             where:{
                 email
-            }
+            },
         })
         if(!check) throw new AppError(`User with ${email} doesn't exist.`, 401)
 
@@ -81,7 +87,7 @@ export const login = async(req: Request, res: Response, next: NextFunction) => {
             httpOnly: true,
         })
 
-        res.sendStatus(200)
+        res.status(200).json({message: "Logged IN.", userId: check.id})
     } catch (error) {
         next(error)
     }

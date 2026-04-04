@@ -2,7 +2,7 @@ import type { NextFunction, Request, Response } from "express";
 import { prisma } from "../../database/prismaClient.js";
 import type { TransactionWhereInput } from "../../generated/prisma/models.js";
 
-export const getFinanceOverviewSummary = async (req: Request, res: Response, next: NextFunction) => {
+export const getFinanceOverview = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const baseWhere: TransactionWhereInput = {
             isDeleted: false,

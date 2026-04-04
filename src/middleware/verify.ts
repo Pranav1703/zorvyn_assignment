@@ -6,7 +6,7 @@ export const authenticate = async(req: Request, res: Response, next: NextFunctio
     try {
         const token = req.cookies["access-token"]
         if (!token) {
-            return res.status(401).json({ message: "You are not logged in. Please log in to get access." });
+            return res.status(401).json({ message: "You are not logged in. Please log in to get access-token." });
         }
         
         const secretKey = getEnvVar("JWT_SECRET");

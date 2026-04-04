@@ -126,6 +126,10 @@ export const updateTransaction = async (req: Request, res: Response, next: NextF
         if (updates.notes !== undefined) {
             updateData.notes = updates.notes;
         }
+        const check = await prisma.transaction.findUnique({
+            where: {id, isDeleted: false}
+        })
+        if(!check) throw new AppError("Transaction is deleted.", 400)
         const updatedTransaction = await prisma.transaction.update({
             where: { id },
             data: updateData
@@ -140,7 +144,10 @@ export const updateTransaction = async (req: Request, res: Response, next: NextF
 export const deleteTransaction = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id  = req.params.id as string;
-
+        const check = await prisma.transaction.findUnique({
+            where: {id, isDeleted: false}
+        })
+        if(!check) throw new AppError("Transaction is deleted.", 400)
         await prisma.transaction.update({
             where: { id },
             data: { isDeleted: true }

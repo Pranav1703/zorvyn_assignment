@@ -9,9 +9,9 @@ import { getAllTransactions,
 
 const r = Router()
 
-r.get("/",authenticate, authorizeRoles(["ANALYST", "ADMIN", "VIEWER"]), getAllTransactions);
+r.get("/",authenticate, authorizeRoles(["ANALYST", "ADMIN"]), getAllTransactions);
 r.post("/new", authenticate, authorizeRoles(["ADMIN"]), createTransaction)
-r.put("/:id", authenticate, authorizeRoles(["ADMIN"]), updateTransaction);
+r.patch("/:id", authenticate, authorizeRoles(["ADMIN"]), updateTransaction);
 r.delete("/:id", authenticate, authorizeRoles(["ADMIN"]), deleteTransaction);
 
 export default r
