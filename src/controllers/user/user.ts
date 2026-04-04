@@ -72,11 +72,7 @@ export const login = async(req: Request, res: Response, next: NextFunction) => {
         })
         if(!check) throw new AppError(`User with ${email} doesn't exist.`, 401)
 
-        if (!check.isActive) {
-            return res.status(403).json({ 
-                message: "Your account is inactive." 
-            });
-        }
+        if (!check.isActive) throw new AppError(`Your account is inActive`, 403)
     
         const compare = await bcrypt.compare(password, check.password)
         if(!compare) throw new AppError("Incorrect password.", 401);

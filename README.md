@@ -47,10 +47,7 @@ npm run seed
 npm run dev
 ```
 
-**Production:**
-```bash
-npm start
-```
+
 
 Server runs on `http://localhost:3000`
 
