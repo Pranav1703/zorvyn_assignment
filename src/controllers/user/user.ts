@@ -52,6 +52,7 @@ export const signUp = async(req: Request, res: Response, next: NextFunction) => 
         res.cookie("access-token", token,{
             maxAge: 60 * 60 * 1000,
             httpOnly: true,
+            sameSite: 'lax'
         })
 
         res.status(201).json({message: "User created and logged in.", userId: newUser.id})
@@ -70,7 +71,7 @@ export const login = async(req: Request, res: Response, next: NextFunction) => {
                 email
             },
         })
-        if(!check) throw new AppError(`User with ${email} doesn't exist.`, 401)
+        if(!check) throw new AppError(`Invalid email or password.`, 401)
 
         if (!check.isActive) throw new AppError(`Your account is inActive`, 403)
     
@@ -87,6 +88,7 @@ export const login = async(req: Request, res: Response, next: NextFunction) => {
        res.cookie("access-token", token,{
             maxAge: 60 * 60 * 1000, //1 hr
             httpOnly: true,
+            sameSite: 'lax'
         })
 
         res.status(200).json({message: "Logged IN.", userId: check.id})
@@ -100,7 +102,8 @@ export const login = async(req: Request, res: Response, next: NextFunction) => {
 export const logout = (req: Request, res: Response, next: NextFunction) => {
     try {
         res.clearCookie('access-token',{
-            httpOnly: true
+            httpOnly: true,
+            sameSite: 'lax'
         })
 
         res.status(200).json({message: "logged Out."})
@@ -140,7 +143,11 @@ export const toggleUserStatus = async (req: Request, res: Response,  next: NextF
 
 export const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const users = await prisma.user.findMany({})
+        const users = await prisma.user.findMany({
+            omit:{
+                password: true
+            }
+        })
 
         res.status(200).json({data: users})
     } catch (error) {
