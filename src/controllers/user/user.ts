@@ -72,6 +72,12 @@ export const login = async(req: Request, res: Response, next: NextFunction) => {
         })
         if(!check) throw new AppError(`User with ${email} doesn't exist.`, 401)
 
+        if (!check.isActive) {
+            return res.status(403).json({ 
+                message: "Your account is inactive." 
+            });
+        }
+    
         const compare = await bcrypt.compare(password, check.password)
         if(!compare) throw new AppError("Incorrect password.", 401);
         
@@ -107,3 +113,27 @@ export const logout = (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
+export const toggleUserStatus = async (req: Request, res: Response) => {
+    const id = req.params.id as string;
+    const { isActive } = req.body; 
+
+    if(isActive === undefined) {
+        throw new AppError("Missing isActive in request body", 400);
+    }
+
+    if(typeof isActive !== 'boolean') throw new AppError("isActive should be boolean", 400);
+    if (id === req.user?.userId) throw new AppError("Cannot deactivate yourself", 400);
+
+    const updatedUser = await prisma.user.update({
+        where: { id },
+        data: { isActive },
+        omit: {
+            password: true
+        }
+    });
+
+    res.status(200).json({
+        message: `User status updated to ${isActive ? 'Active' : 'Inactive'}`,
+        user: updatedUser
+    });
+};
