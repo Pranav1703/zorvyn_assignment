@@ -30,16 +30,28 @@ npm install
 npm run generate
 ```
 
-### 3. Seed Database
+### 3. Build Project
+```bash
+npm run build
+```
+
+### 4. Seed Database
 ```bash
 npm run seed
 ```
-**Note**: Run this separately before starting the server.
 
-### 4. Start Server
+### 5. Start Server
+
+**Development:**
 ```bash
 npm run dev
 ```
+
+**Production:**
+```bash
+npm start
+```
+
 Server runs on `http://localhost:3000`
 
 ## API Endpoints

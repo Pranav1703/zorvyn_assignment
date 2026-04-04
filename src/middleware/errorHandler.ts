@@ -16,8 +16,7 @@ export const globalErrorHandler = (
   res: Response, 
   next: NextFunction
 ) => {
-    console.log("[global err handler] ",err.message, " : ", err.stack)
-    err.statusCode = err.statusCode || 500;
+    console.log("[global err handler] :", err.stack)
 
     if (err.name === 'CastError' || err.code === 'P2023') {
       return res.status(400).json({
@@ -47,13 +46,14 @@ export const globalErrorHandler = (
         message: "Token expired"
       });
     }
-
+    
+    const statusCode = err.statusCode || 500;
     let message = 'Internal Server Error'
     if (err instanceof AppError) {
         message = err.message;
     }
 
-    res.status(err.statusCode).json({
+    res.status(statusCode).json({
       message: message,
     });
 };
