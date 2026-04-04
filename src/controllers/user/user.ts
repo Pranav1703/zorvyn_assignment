@@ -113,27 +113,41 @@ export const logout = (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
-export const toggleUserStatus = async (req: Request, res: Response) => {
-    const id = req.params.id as string;
-    const { isActive } = req.body; 
+export const toggleUserStatus = async (req: Request, res: Response,  next: NextFunction) => {
+    try {
+        const id = req.params.id as string;
+        const { isActive } = req.body; 
 
-    if(isActive === undefined) {
-        throw new AppError("Missing isActive in request body", 400);
-    }
-
-    if(typeof isActive !== 'boolean') throw new AppError("isActive should be boolean", 400);
-    if (id === req.user?.userId) throw new AppError("Cannot deactivate yourself", 400);
-
-    const updatedUser = await prisma.user.update({
-        where: { id },
-        data: { isActive },
-        omit: {
-            password: true
+        if(isActive === undefined) {
+            throw new AppError("Missing isActive in request body", 400);
         }
-    });
 
-    res.status(200).json({
-        message: `User status updated to ${isActive ? 'Active' : 'Inactive'}`,
-        user: updatedUser
-    });
+        if(typeof isActive !== 'boolean') throw new AppError("isActive should be boolean", 400);
+        if (id === req.user?.userId) throw new AppError("Cannot deactivate yourself", 400);
+
+        const updatedUser = await prisma.user.update({
+            where: { id },
+            data: { isActive },
+            omit: {
+                password: true
+            }
+        });
+
+        res.status(200).json({
+            message: `User status updated to ${isActive ? 'Active' : 'Inactive'}`,
+            user: updatedUser
+        });
+    } catch (error) {
+        next(error)
+    }
 };
+
+export const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const users = await prisma.user.findMany({})
+
+        res.status(200).json({data: users})
+    } catch (error) {
+        next(error)
+    }
+}
