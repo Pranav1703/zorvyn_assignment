@@ -20,27 +20,49 @@ A role-based finance data processing and access control backend built with Expre
 
 ## Setup
 
-### 1. Install Dependencies
+### 1. Environment Variables
+Create a `.env` file:
+```env
+PORT=3000
+DATABASE_URL=mongodb://localhost:27017/zorvyn
+JWT_SECRET=your-secret-key
+```
+
+### MongoDB Replica Set Requirement
+Prisma requires MongoDB to run as a replica set for transactions. 
+
+**For local development**, run:
+```bash
+mongod --replSet rs0
+```
+Then connect to MongoDB shell and run:
+```javascript
+rs.initiate()
+```
+
+**Or use MongoDB Atlas** (cloud) - just update `DATABASE_URL` with your Atlas connection string.
+
+### 2. Install Dependencies
 ```bash
 npm install
 ```
 
-### 2. Generate Prisma Client
+### 3. Generate Prisma Client
 ```bash
 npm run generate
 ```
 
-### 3. Build Project
+### 4. Build Project
 ```bash
 npm run build
 ```
 
-### 4. Seed Database
+### 5. Seed Database
 ```bash
 npm run seed
 ```
 
-### 5. Start Server
+### 6. Start Server
 
 **Development:**
 ```bash
@@ -120,7 +142,7 @@ Server runs on `http://localhost:3000`
 **Request Body - Create/Update**
 ```json
 {
-  "amount": number,
+  "amount": "number",
   "type": "INCOME" | "EXPENSE",
   "category": "string",
   "date": "ISO date string",
@@ -151,6 +173,7 @@ Server runs on `http://localhost:3000`
 
 1. **No refresh tokens** - Since there is no frontend, refresh token flow was not implemented.
 
+2. **Soft delete** - Hard deleting rows keeps the database small and clean. Soft deleteing using `isDeleted: true` means the database will grow larger over time, but it can be auditable.
 ## Default Admin User
 
 After seeding:
