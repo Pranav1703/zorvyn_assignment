@@ -84,7 +84,7 @@ Server runs on `http://localhost:3000`
 |--------|----------------------|---------|------------------------------|
 | GET    | /user                | ADMIN   | Get all users                |
 | POST   | /user/updateRole/:id | ADMIN   | Update user role             |
-| PATCH  | /user/users/:id/status | ADMIN | Toggle user active status  |
+| PATCH  | /user/:id/status     | ADMIN   | Toggle user active status    |
 
 **Request Body - Update Role**
 ```json
@@ -102,12 +102,12 @@ Server runs on `http://localhost:3000`
 
 ### Transactions
 
-| Method | Endpoint           | Access      | Description                    |
-|--------|--------------------|-------------|--------------------------------|
-| GET    | /transaction       | ANALYST, ADMIN | Get all transactions (paginated) |
-| POST   | /transaction/new   | ADMIN       | Create new transaction         |
-| PATCH  | /transaction/:id   | ADMIN      | Update transaction             |
-| DELETE | /transaction/:id   | ADMIN      | Delete (soft delete) transaction |
+| Method | Endpoint           | Access            | Description                    |
+|--------|--------------------|-------------------|--------------------------------|
+| GET    | /transaction       | ANALYST, ADMIN    | Get all transactions (paginated) |
+| POST   | /transaction/new   | ADMIN             | Create new transaction         |
+| PATCH  | /transaction/:id   | ANALYST, ADMIN    | Update transaction             |
+| DELETE | /transaction/:id   | ADMIN             | Delete (soft delete) transaction |
 
 **Query Params (GET)**
 - `page` - Page number (default: 1)

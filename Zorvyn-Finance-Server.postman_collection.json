@@ -7,437 +7,464 @@
   },
   "item": [
     {
-      "name": "SignUp",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"username\": \"testUser\",\r\n    \"email\": \"test@gmail.com\",\r\n    \"password\": \"test123\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
+      "name": "auth and user management",
+      "item": [
+        {
+          "name": "SignUp",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"testUser\",\r\n    \"email\": \"test@gmail.com\",\r\n    \"password\": \"test123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/user/signUp",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "user",
+                "signUp"
+              ]
+            },
+            "description": "Register new user  \nrequest body: {  \"username\": \"string\",  \"email\": \"string\",  \"password\": \"string\"}"
+          },
+          "response": []
         },
-        "url": {
-          "raw": "http://localhost:3000/user/signUp",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3000",
-          "path": [
-            "user",
-            "signUp"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "viewer login",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"email\": \"test@gmail.com\",\r\n    \"password\": \"test123\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
+        {
+          "name": "login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"admin@zorvyn.in\",\r\n    \"password\": \"admin123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/user/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "user",
+                "login"
+              ]
+            },
+            "description": "login user\n\nrequest body:  \n{  \"email\": \"string\",  \"password\": \"string\"}"
+          },
+          "response": []
         },
-        "url": {
-          "raw": "http://localhost:3000/user/login",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3000",
-          "path": [
-            "user",
-            "login"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "analyst login",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"email\": \"admin@zorvyn.in\",\r\n    \"password\": \"admin123\"\r\n}"
+        {
+          "name": "logout",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"test@gmail.com\",\r\n    \"password\": \"test123\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/user/logout",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "user",
+                "logout"
+              ]
+            },
+            "description": "logout user"
+          },
+          "response": []
         },
-        "url": {
-          "raw": "http://localhost:3000/user/login",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3000",
-          "path": [
-            "user",
-            "login"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "admin login",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"email\": \"admin@zorvyn.in\",\r\n    \"password\": \"admin123\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
+        {
+          "name": "update role (promte or demote)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"test@gmail.com\",\r\n    \"password\": \"test123\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/user/updateRole",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "user",
+                "updateRole"
+              ]
+            },
+            "description": "Update user roie\n\nrequest body:  \n{  \"role\": \"VIEWER\" | \"ANALYST\" | \"ADMIN\"}"
+          },
+          "response": []
         },
-        "url": {
-          "raw": "http://localhost:3000/user/login",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3000",
-          "path": [
-            "user",
-            "login"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "logout",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"email\": \"test@gmail.com\",\r\n    \"password\": \"test123\"\r\n}"
+        {
+          "name": "toggle user status",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"isActive\": false\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/user/:id/status",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "user",
+                ":id",
+                "status"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Toggle user active status\n\nrequest body:\n\n{  \"isActive\": boolean}"
+          },
+          "response": []
         },
-        "url": {
-          "raw": "http://localhost:3000/user/logout",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3000",
-          "path": [
-            "user",
-            "logout"
-          ]
+        {
+          "name": "get all user data",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/user/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "user",
+                ""
+              ]
+            },
+            "description": "get all users data excluding password."
+          },
+          "response": []
         }
-      },
-      "response": []
+      ]
     },
     {
-      "name": "update role (promte or demote)",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"email\": \"test@gmail.com\",\r\n    \"password\": \"test123\"\r\n}"
+      "name": "transactions",
+      "item": [
+        {
+          "name": "create transaction",
+          "request": {
+            "auth": {
+              "type": "jwt",
+              "jwt": [
+                {
+                  "key": "algorithm",
+                  "value": "HS256",
+                  "type": "string"
+                },
+                {
+                  "key": "isSecretBase64Encoded",
+                  "value": false,
+                  "type": "boolean"
+                },
+                {
+                  "key": "payload",
+                  "value": "{}",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "headerPrefix",
+                  "value": "Bearer",
+                  "type": "string"
+                },
+                {
+                  "key": "queryParamKey",
+                  "value": "token",
+                  "type": "string"
+                },
+                {
+                  "key": "header",
+                  "value": "{}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{   \"amount\": 6000, \r\n    \"type\": \"INCOME\", \r\n    \"category\": \"Salary\",\r\n    \"date\": \"2026-04-04T11:25:56.931Z\", \r\n    \"notes\": \"Current month salary\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/transaction/new",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "transaction",
+                "new"
+              ]
+            },
+            "description": "create a transaction.  \nonly ADMIN can create trasactions  \nrequest body:  \nStartFragment{  \"amount\": number,  \"type\": \"INCOME\" | \"EXPENSE\",  \"category\": \"string\",  \"date\": \"ISO date string\",  \"notes\": \"string (optional)\"}EndFragment"
+          },
+          "response": []
         },
-        "url": {
-          "raw": "http://localhost:3000/user/updateRole",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3000",
-          "path": [
-            "user",
-            "updateRole"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "show all transactions",
-      "protocolProfileBehavior": {
-        "disableBodyPruning": true
-      },
-      "request": {
-        "auth": {
-          "type": "jwt",
-          "jwt": [
-            {
-              "key": "algorithm",
-              "value": "HS256",
-              "type": "string"
+        {
+          "name": "update transaction",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"amount\": 6969\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
-            {
-              "key": "isSecretBase64Encoded",
-              "value": false,
-              "type": "boolean"
+            "url": {
+              "raw": "http://localhost:3000/transaction/69d0f54f3cf11a06cdd725ac",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "transaction",
+                "69d0f54f3cf11a06cdd725ac"
+              ]
             },
-            {
-              "key": "payload",
-              "value": "{}",
-              "type": "string"
-            },
-            {
-              "key": "addTokenTo",
-              "value": "header",
-              "type": "string"
-            },
-            {
-              "key": "headerPrefix",
-              "value": "Bearer",
-              "type": "string"
-            },
-            {
-              "key": "queryParamKey",
-              "value": "token",
-              "type": "string"
-            },
-            {
-              "key": "header",
-              "value": "{}",
-              "type": "string"
-            }
-          ]
+            "description": "Update transaction using id.\n\nADMIN and ANALYST can update.  \nrequest body:  \n{  \"amount\": number,  \"type\": \"INCOME\" | \"EXPENSE\",  \"category\": \"string\",  \"date\": \"ISO date string\",  \"notes\": \"string\"}"
+          },
+          "response": []
         },
-        "method": "GET",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": ""
+        {
+          "name": "delete transaction",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/transaction/69d0f54f3cf11a06cdd725ac",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "transaction",
+                "69d0f54f3cf11a06cdd725ac"
+              ]
+            },
+            "description": "Delete a transaction using id.  \nonly ADMIN can delete a transaction."
+          },
+          "response": []
         },
-        "url": {
-          "raw": "http://localhost:3000/transaction?page=1&limit=5",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3000",
-          "path": [
-            "transaction"
-          ],
-          "query": [
-            {
-              "key": "page",
-              "value": "1"
+        {
+          "name": "show all transactions",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "jwt",
+              "jwt": [
+                {
+                  "key": "algorithm",
+                  "value": "HS256",
+                  "type": "string"
+                },
+                {
+                  "key": "isSecretBase64Encoded",
+                  "value": false,
+                  "type": "boolean"
+                },
+                {
+                  "key": "payload",
+                  "value": "{}",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "headerPrefix",
+                  "value": "Bearer",
+                  "type": "string"
+                },
+                {
+                  "key": "queryParamKey",
+                  "value": "token",
+                  "type": "string"
+                },
+                {
+                  "key": "header",
+                  "value": "{}",
+                  "type": "string"
+                }
+              ]
             },
-            {
-              "key": "limit",
-              "value": "5"
-            }
-          ]
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:3000/transaction?page=1&limit=5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "transaction"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                }
+              ]
+            },
+            "description": "retrieve all transactions.  \nall roles have access."
+          },
+          "response": []
         }
-      },
-      "response": []
+      ]
     },
     {
-      "name": "create transaction",
-      "request": {
-        "auth": {
-          "type": "jwt",
-          "jwt": [
-            {
-              "key": "algorithm",
-              "value": "HS256",
-              "type": "string"
+      "name": "dashboard",
+      "item": [
+        {
+          "name": "get monthly trends",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/dashboard/monthlyTrends",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "dashboard",
+                "monthlyTrends"
+              ]
             },
-            {
-              "key": "isSecretBase64Encoded",
-              "value": false,
-              "type": "boolean"
-            },
-            {
-              "key": "payload",
-              "value": "{}",
-              "type": "string"
-            },
-            {
-              "key": "addTokenTo",
-              "value": "header",
-              "type": "string"
-            },
-            {
-              "key": "headerPrefix",
-              "value": "Bearer",
-              "type": "string"
-            },
-            {
-              "key": "queryParamKey",
-              "value": "token",
-              "type": "string"
-            },
-            {
-              "key": "header",
-              "value": "{}",
-              "type": "string"
-            }
-          ]
+            "description": "Get monthly income/expense trends  \nexample query:  \n/monthlyTrends?months=3"
+          },
+          "response": []
         },
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{   \"amount\": 6000, \r\n    \"type\": \"INCOME\", \r\n    \"category\": \"Salary\",\r\n    \"date\": \"2026-04-04T11:25:56.931Z\", \r\n    \"notes\": \"Current month salary\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
+        {
+          "name": "get recent activity",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/dashboard/recentActivity",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "dashboard",
+                "recentActivity"
+              ]
+            },
+            "description": "Get recent transactions  \nexample query:  \n/recentActivity?limit=5"
+          },
+          "response": []
         },
-        "url": {
-          "raw": "http://localhost:3000/transaction/new",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3000",
-          "path": [
-            "transaction",
-            "new"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "update transaction",
-      "request": {
-        "method": "PATCH",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"amount\": 6969\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
+        {
+          "name": "get catogery totals",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/dashboard/categoryTotals",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "dashboard",
+                "categoryTotals"
+              ]
+            },
+            "description": "Get totals grouped by category & type"
+          },
+          "response": []
         },
-        "url": {
-          "raw": "http://localhost:3000/transaction/69d0f54f3cf11a06cdd725ac",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3000",
-          "path": [
-            "transaction",
-            "69d0f54f3cf11a06cdd725ac"
-          ]
+        {
+          "name": "get finanace overview",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/dashboard/financeOverview",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "dashboard",
+                "financeOverview"
+              ]
+            },
+            "description": "Get total income, expenses, net balance"
+          },
+          "response": []
         }
-      },
-      "response": []
-    },
-    {
-      "name": "delete transaction",
-      "request": {
-        "method": "DELETE",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:3000/transaction/69d0f54f3cf11a06cdd725ac",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3000",
-          "path": [
-            "transaction",
-            "69d0f54f3cf11a06cdd725ac"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "get finanace overview",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:3000/dashboard/financeOverview",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3000",
-          "path": [
-            "dashboard",
-            "financeOverview"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "get catogery totals",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:3000/dashboard/categoryTotals",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3000",
-          "path": [
-            "dashboard",
-            "categoryTotals"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "get recent activity",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:3000/dashboard/recentActivity",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3000",
-          "path": [
-            "dashboard",
-            "recentActivity"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "get monthly trends",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:3000/dashboard/monthlyTrends",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3000",
-          "path": [
-            "dashboard",
-            "monthlyTrends"
-          ]
-        }
-      },
-      "response": []
+      ]
     }
   ]
 }

@@ -11,7 +11,7 @@ const r = Router()
 
 r.get("/",authenticate, authorizeRoles(["ANALYST", "ADMIN"]), getAllTransactions);
 r.post("/new", authenticate, authorizeRoles(["ADMIN"]), createTransaction)
-r.patch("/:id", authenticate, authorizeRoles(["ADMIN"]), updateTransaction);
+r.patch("/:id", authenticate, authorizeRoles(["ADMIN","ANALYST"]), updateTransaction);
 r.delete("/:id", authenticate, authorizeRoles(["ADMIN"]), deleteTransaction);
 
 export default r
